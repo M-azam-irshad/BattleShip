@@ -1,16 +1,20 @@
-let board;
-
 class Ship {
   #length;
+  #coords;
   #hits = 0;
 
   constructor(size) {
     this.#length = size;
+    this.#coords = [];
+    this.#hits = 0;
   }
 
-  hit(params) {
-    this.#hits++;
+  place(cordinates) {
+    this.#coords = cordinates;
+    return this.#coords;
   }
+
+  hit() {}
 
   sunk(e) {
     // Method implementation
@@ -19,7 +23,7 @@ class Ship {
 
 class Player {
   constructor() {
-    turn = 0;
+    turn = 1;
   }
 }
 
@@ -34,3 +38,18 @@ class Board {
     return [i, j];
   });
 }
+
+let B1 = new Board();
+let B2 = new Board();
+let carrier = new Ship(5);
+console.log(
+  carrier.place([
+    [0, 1],
+    [0, 2],
+    [0, 3],
+    [0, 4],
+    [0, 5],
+  ])
+);
+
+module.exports = { B1, hit };
