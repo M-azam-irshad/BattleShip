@@ -1,34 +1,47 @@
+
+
 class Ship {
   #length;
   #coords;
   #hits = 0;
 
-  constructor(size) {
+  constructor(size,cordinates) {
     this.#length = size;
     this.#coords = [];
     this.#hits = 0;
-  }
-
-  place(cordinates) {
     this.#coords = cordinates;
-    return this.#coords;
   }
 
-  hit() {}
 
-  sunk(e) {
+  hit() {
+    this.#hits++;
+    console.log("It worked");
+    
+  }
+
+  sunk() {
+    let sunk = this.#hits >= this.#length;
+    return sunk;
     // Method implementation
+  }
+
+  match(input) {
+    return this.#coords.some((arr) => {
+      return JSON.stringify(arr) === JSON.stringify(input);
+    });
   }
 }
 
 class Player {
   constructor() {
-    turn = 1;
+    this.turn = 1;
   }
 }
 
 class Computer {
-  turn = 0;
+  constructor() {
+    this.turn = 0;
+  }
 }
 
 class Board {
@@ -41,15 +54,22 @@ class Board {
 
 let B1 = new Board();
 let B2 = new Board();
-let carrier = new Ship(5);
-console.log(
-  carrier.place([
-    [0, 1],
-    [0, 2],
-    [0, 3],
-    [0, 4],
-    [0, 5],
-  ])
-);
+let ship1 = new Ship(5, [[0, 1],
+  [0, 2],
+  [0, 3],
+  [0, 4],
+  [0, 5],]);
+let ship2 = new Ship(3);
+let ship3 = new Ship(3);
+let ship4 = new Ship(2);
+let ship5 = new Ship(1);
 
-module.exports = { B1, hit };
+
+
+
+function checking(input) {
+  return ship1.match(input);
+}
+checking([0,1]);
+
+
