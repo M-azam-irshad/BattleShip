@@ -1,4 +1,4 @@
-// let usedCell = [];
+let usedCell = [];
 
 class Ship {
   #length;
@@ -24,24 +24,31 @@ class Ship {
     return this.#hits >= this.#length;
   }
 
-  match(input) {
+  match(input)
+  {
+    if (this.#coords.some(([x, y]) => x === input[0] && y === input[1]))
+      {
+        usedCell.push(input)
+        console.log(usedCell);
+        
+        return true;
+      }
+      else{
+        return false;
+      }
+  }
+  validation(input) {
     
-    // if(usedCell.some(([x,y]) => x === input[0] && y === input[1]))
-    // {
-    //   console.log("Alread selected");
-      
-    //   return false;
-    // }
-   if (this.#coords.some(([x, y]) => x === input[0] && y === input[1]))
+    if(usedCell.some(([x,y]) => x === input[0] && y === input[1]))
     {
-      // usedCell.push(input)
-      // console.log(usedCell);
+      console.log("Already exist");
       
-      return true;
-    }
-    else{
       return false;
     }
+    return this.match(input)
+
+
+
   }
 }
 
@@ -98,30 +105,30 @@ let ship5 = new Ship(1, [[8, 9]]);
 
 // Function to check if a coordinate hits ship1
 function checking(input) {
-  if (ship1.match(input)) {
+  if (ship1.validation(input)) {
     ship1.hit();
     console.log("Hit confirmed!");
     return true;
   } 
-  else if(ship2.match(input))
+  else if(ship2.validation(input))
   {
     ship2.hit();
     console.log("Ship2 hit");
     return true;
   }
-  else if(ship3.match(input))
+  else if(ship3.validation(input))
   {
     ship3.hit();
     console.log("Ship3 hit");
     return true;
   }
-  else if(ship4.match(input))
+  else if(ship4.validation(input))
   {
     ship4.hit();
     console.log("Ship4 hit");
     return true;
   }
-  else if(ship5.match(input))
+  else if(ship5.validation(input))
   {
     ship5.hit();
     console.log("Ship5 hit");
@@ -139,12 +146,9 @@ function checking(input) {
 // Should log "Ship hit!" and "Hit confirmed!"
 
 checking([0,1]);
-checking([0,1]);
-checking([0,1]);
-checking([2,3])
-checking( [4, 4])
-checking( [4, 5])
-checking([0,4]);
+checking([2,3]);
+checking([2,3]);
+
 // checking(); 
 
 
