@@ -1,4 +1,4 @@
-let usedCell = [];
+// let usedCell = [];
 
 class Ship {
   #length;
@@ -26,18 +26,21 @@ class Ship {
 
   match(input) {
     
-    if(usedCell.some(([x,y]) => x === input[0] && y === input[1]))
-    {
-      console.log("Alread selected");
+    // if(usedCell.some(([x,y]) => x === input[0] && y === input[1]))
+    // {
+    //   console.log("Alread selected");
       
-      return false;
+    //   return false;
+    // }
+   if (this.#coords.some(([x, y]) => x === input[0] && y === input[1]))
+    {
+      // usedCell.push(input)
+      // console.log(usedCell);
+      
+      return true;
     }
-    else
-    {
-      usedCell.push(input)
-      console.log(usedCell);
-      
-      return this.#coords.some(([x, y]) => x === input[0] && y === input[1]);
+    else{
+      return false;
     }
   }
 }
@@ -99,7 +102,33 @@ function checking(input) {
     ship1.hit();
     console.log("Hit confirmed!");
     return true;
-  } else {
+  } 
+  else if(ship2.match(input))
+  {
+    ship2.hit();
+    console.log("Ship2 hit");
+    return true;
+  }
+  else if(ship3.match(input))
+  {
+    ship3.hit();
+    console.log("Ship3 hit");
+    return true;
+  }
+  else if(ship4.match(input))
+  {
+    ship4.hit();
+    console.log("Ship4 hit");
+    return true;
+  }
+  else if(ship5.match(input))
+  {
+    ship5.hit();
+    console.log("Ship5 hit");
+    return true;
+  }
+
+  else {
  
     console.log("Miss!");
     return false;
@@ -108,9 +137,14 @@ function checking(input) {
 
  // Should log "Ship hit!" and "Hit confirmed!"
 // Should log "Ship hit!" and "Hit confirmed!"
-checking([0,1])
-checking([0,1])
-checking([0,5])
-checking([0,5])
+
+checking([0,1]);
+checking([0,1]);
+checking([0,1]);
+checking([2,3])
+checking( [4, 4])
+checking( [4, 5])
+checking([0,4]);
+// checking(); 
 
 
