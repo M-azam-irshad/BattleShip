@@ -1,41 +1,38 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-html,body{
-    width: 100vw;
-    height: 100vh;
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevent unwanted scrolling */
 }
-#gridsContainer{
-    width: 100vw;
-    height: 100vh;
+
+#gridsContainer {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-}
-#grid{
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    overflow: hidden;
-    width:clamp(200px,30vw,300px) ;
-    min-height: 300px;
-    border: 2px solid black;
-}
-#grid2{
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    overflow: hidden;
-    width:clamp(200px,30vw,300px) ;
-    min-height: 300px;
-    border: 2px solid black;
+    gap: 5vw;
+    /* flex-wrap: wrap; Ensures wrapping on smaller screens */
+    padding: 10px;
 }
 
-.grid-child
-{
+#grid, #grid2 {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    overflow: hidden;
+    width: clamp(100px,35vw, 300px);  /* Ensures it scales but doesn't exceed 300px */
+    aspect-ratio: 1 / 1; /* Maintains a perfect square */
+    border: 2px solid black;
+    min-width: 100px; /* Allows it to shrink more on smaller screens */
+}
+
+.grid-child {
     background-color: lightblue;
     border: 1px solid #000;
     padding: 0;
@@ -43,8 +40,21 @@ html,body{
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.5em;
+    font-size: min(1vw, 0.8em); /* Adjusts text size responsively */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    aspect-ratio: 1 / 1; /* Makes sure cells remain squares */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    #gridsContainer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #grid, #grid2 {
+        width: min(80vw, 300px); 
+    }
 }
