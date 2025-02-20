@@ -65,6 +65,7 @@ class Board {
 // Initialize Boards
 let B1 = new Board();
 let B2 = new Board();
+let player = new Player();
 
 // Create Ships
 let ships = [
@@ -76,6 +77,7 @@ let ships = [
 ];
 
 // Function to check if a coordinate hits any ship
+
 function checking(input) {
   for (let ship of ships) {
     if (ship.validation(input)) {
@@ -88,32 +90,10 @@ function checking(input) {
   return false;
 }
 
+
 // Create Grids in the DOM
 let grid1 = document.getElementById("grid");
 let grid2 = document.getElementById("grid2");
-
-// function createGrid(gridElement, board) {
-//   let fragment = document.createDocumentFragment();
-//   for (let i = 0; i < 10; i++) {
-//     for (let j = 0; j < 10; j++) {
-//       let cell = document.createElement("div");
-//       cell.className = "grid-child";
-//       cell.dataset.coord = JSON.stringify([i, j]); // Store coordinates
-//       cell.addEventListener("click", () => handleCellClick([i, j], cell));
-//       fragment.appendChild(cell);
-//     }
-//   }
-//   gridElement.appendChild(fragment);
-// }
-
-// // Handle Click on Grid Cells
-// function handleCellClick(coord, cell) {
-//   if (checking(coord)) {
-//     cell.style.backgroundColor = "red"; // Mark hit
-//   } else {
-//     cell.style.backgroundColor = "gray"; // Mark miss
-//   }
-// }
 
 // Create Both Player and Computer Grids
 
@@ -136,6 +116,7 @@ function createGrid(gridElement,board)
 
 function handleCellClick(coord,cell)
 {
+  if(player.turn === 1){
   if(checking(coord))
   {
     cell.style.background = "red";
@@ -144,7 +125,9 @@ function handleCellClick(coord,cell)
   {
     cell.style.background = "grey";
   }
-}
+  player.turn = 0;
+
+}}
 createGrid(grid1, B1);
 createGrid(grid2, B2);
 
