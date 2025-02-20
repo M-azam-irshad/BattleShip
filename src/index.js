@@ -1,3 +1,4 @@
+let turnCount = document.getElementById("turn")
 let usedCell = [];
 
 class Ship {
@@ -113,6 +114,21 @@ function createGrid(gridElement,board)
   }
   gridElement.appendChild(fragment);
 }
+function createComputerGrid(gridElement,board)
+{
+  let fragment = document.createDocumentFragment();
+  for(let i=0; i < 10; i++)
+  {
+    for(let j=0; j< 10; j++)
+    {
+      let cell = document.createElement("div");
+      cell.className = "grid-child";
+      cell.dataset.coord = JSON.stringify([i,j]);
+      fragment.appendChild(cell)
+    }
+  }
+  gridElement.appendChild(fragment);
+}
 
 function handleCellClick(coord,cell)
 {
@@ -126,9 +142,30 @@ function handleCellClick(coord,cell)
     cell.style.background = "grey";
   }
   player.turn = 0;
+  turnCount.innerText = "Computer's turn";
+  setTimeout(()=> {ComputerTurn()},1000)
 
 }}
+
 createGrid(grid1, B1);
-createGrid(grid2, B2);
+createComputerGrid(grid2, B2);
+console.log(grid2.children[1])
+function handleComputerClick(coords)
+{
+  if(checking(coords))
+  {
+    grid2.children[coords].style.background = "red";
+  }
+  else
+  {
+    grid2.children[coords].style.background = "grey";
+  }
+}
 
 console.log("Game Initialized!");
+
+function ComputerTurn()
+{
+  let random = Math.floor(Math.random()*99);
+  handleComputerClick(random)
+}
