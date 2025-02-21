@@ -37,7 +37,7 @@ class Ship {
   validation(input) {
     if (usedCell.some(([x, y]) => x === input[0] && y === input[1])) {
       console.log("Already attacked!");
-      return false;
+      
     }
     return this.match(input);
   }
@@ -67,6 +67,7 @@ class Board {
 let B1 = new Board();
 let B2 = new Board();
 let player = new Player();
+let computer = new Computer();
 
 // Create Ships
 let ships = [
@@ -76,6 +77,15 @@ let ships = [
   new Ship(2, [[6, 7], [6, 8]]),
   new Ship(1, [[8, 9]])
 ];
+let Computerships = [
+  new Ship(5, [[2, 2], [3, 2], [4, 2], [5, 2], [6, 2]]),
+  new Ship(3, [[3, 1], [3, 2], [3, 3]]),
+  new Ship(3, [[3, 7], [4, 7], [5, 7]]),
+  new Ship(2, [[3, 7], [3, 8]]),
+  new Ship(1, [[9, 9]])
+];
+
+
 
 // Function to check if a coordinate hits any ship
 
@@ -92,13 +102,14 @@ function checking(input) {
 }
 
 
+
 // Create Grids in the DOM
 let grid1 = document.getElementById("grid");
 let grid2 = document.getElementById("grid2");
 
 // Create Both Player and Computer Grids
 
-function createGrid(gridElement,board)
+function createGrid(gridElement)
 {
   let fragment = document.createDocumentFragment();
   for(let i=0; i < 10; i++)
@@ -114,7 +125,7 @@ function createGrid(gridElement,board)
   }
   gridElement.appendChild(fragment);
 }
-function createComputerGrid(gridElement,board)
+function createComputerGrid(gridElement)
 {
   let fragment = document.createDocumentFragment();
   for(let i=0; i < 10; i++)
@@ -142,17 +153,35 @@ function handleCellClick(coord,cell)
     cell.style.background = "grey";
   }
   player.turn = 0;
+  computer.turn = 1;
   turnCount.innerText = "Computer's turn";
-  setTimeout(()=> {ComputerTurn()},1000)
+  // setTimeout(()=> {ComputerTurn()},1000)
+  ComputerTurn()
+
 
 }}
 
 createGrid(grid1, B1);
 createComputerGrid(grid2, B2);
 console.log(grid2.children[1])
+
+function Computerchecking(input) {
+  for (let ship of Computerships) {
+    if (ship.validation(input)) {
+      ship.hit();
+      console.log("Computer Hit!");
+      return true;
+    }
+  }
+  console.log("Computer Miss!");
+  return false;
+}
+
 function handleComputerClick(coords)
 {
-  if(checking(coords))
+  console.log(JSON.parse(grid2.children[coords].dataset.coord));
+  
+  if(Computerchecking(JSON.parse(grid2.children[coords].dataset.coord)))
   {
     grid2.children[coords].style.background = "red";
   }
@@ -162,10 +191,16 @@ function handleComputerClick(coords)
   }
 }
 
-console.log("Game Initialized!");
 
 function ComputerTurn()
-{
-  let random = Math.floor(Math.random()*99);
-  handleComputerClick(random)
+{ 
+  if(computer.turn === 1)
+  {
+    let random = Math.floor(Math.random()*99);
+    handleComputerClick(random);
+    player.turn = 1;
+    computer.turn = 0;
+    turnCount.innerText = "Your turn";
+  }
+
 }
