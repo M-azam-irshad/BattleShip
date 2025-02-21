@@ -4,7 +4,7 @@ let usedCell = [];
 class Ship {
   #length;
   #coords;
-  #hits = 0;
+  hits = 0;
 
   constructor(size, coordinates) {
     if (!Array.isArray(coordinates) || coordinates.length !== size) {
@@ -13,16 +13,16 @@ class Ship {
     
     this.#length = size;
     this.#coords = coordinates;
-    this.#hits = 0;
+    this.hits = 0;
   }
 
   hit() {
-    this.#hits++;
-    console.log(`Ship hit! Total hits: ${this.#hits}`);
+    this.hits++;
+    console.log(`Ship hit! Total hits: ${this.hits}`);
   }
 
   sunk() {
-    return this.#hits >= this.#length;
+    return this.hits >= this.#length;
   }
 
   match(input) {
@@ -46,12 +46,14 @@ class Ship {
 class Player {
   constructor() {
     this.turn = 1;
+    this.hits = 0;
   }
 }
 
 class Computer {
   constructor() {
     this.turn = 0;
+    this.hits = 0;
   }
 }
 
@@ -93,7 +95,11 @@ function checking(input) {
   for (let ship of ships) {
     if (ship.validation(input)) {
       ship.hit();
+      player.hits++
+      console.log(player.hits);
+      
       console.log("Hit confirmed!");
+      gameOver();
       return true;
     }
   }
@@ -169,7 +175,9 @@ function Computerchecking(input) {
   for (let ship of Computerships) {
     if (ship.validation(input)) {
       ship.hit();
+      computer.hits++;
       console.log("Computer Hit!");
+      gameOver();
       return true;
     }
   }
@@ -201,6 +209,16 @@ function ComputerTurn()
     player.turn = 1;
     computer.turn = 0;
     turnCount.innerText = "Your turn";
+
   }
 
 }
+
+function gameOver() {
+  if (player.hits === 14) {
+    setTimeout(() => alert("You win!"), 100); // Delay to allow UI update
+  } else if (computer.hits === 12) {
+    setTimeout(() => alert("Computer wins!"), 100);
+  }
+}
+
